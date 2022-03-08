@@ -1,13 +1,10 @@
-## ## How to Contribute
+## How to Contribute
 
 This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator. Follow the below steps to contribute to this developer site:
-
 
 ```console
 yarn install
 ```
-
-**Note:** Node.js 16 isn't supported yet.  If you experience issues with `node-gyp` compiling code, switch to the current LTS version of Node.js and re-run `yarn install`.
 
 ## Local Development
 
