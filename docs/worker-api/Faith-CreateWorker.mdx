@@ -1,0 +1,22 @@
+---
+sidebar_position: 2
+---
+
+# Faith.CreateWorker
+
+### Faith.CreateWorker
+Prints what you provide on the log, it's able to print almost any type of variable and supports an unlimited amount of arguments.
+
+```jsx title="CreateWorker Example"
+-- name is the name of the worker
+-- fn is the function that you want looped
+local something
+Faith.CreateWorker("Some Stuff", function()
+    DoStuff()
+
+    if something then
+        DoMoreStuff()
+    end
+
+end)
+```

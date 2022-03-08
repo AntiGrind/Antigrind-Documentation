@@ -1,0 +1,17 @@
+---
+sidebar_position: 1
+---
+
+# Memory Editing API (BETA)
+
+You can edit the game's memory using these, also read it. However you must know what you are doing even more than with globals.
+To be able to efficiently use this you must have some reverse engineering knowledge (or you can steal offsets from unknowncheats.net like cherax).
+
+:::danger Careful!
+There's no error checking or anything when doing this, if you fuck up you will probably crash.
+If you don't fuck up but don't know what you are doing you can potentially ban yourself if you touch what you shouldn't.
+:::
+
+## Functions
+
+Quite simple, you have a function to write globals, and three functions to read globals (one for each type, float, int or bool).

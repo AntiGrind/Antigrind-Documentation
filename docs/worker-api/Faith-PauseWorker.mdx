@@ -1,0 +1,32 @@
+---
+sidebar_position: 3
+---
+
+# Faith.PauseWorker
+
+### Faith.PauseWorker
+Pauses the worker for a set time, in miliseconds.
+:::tip Tip
+When you call PauseWorker the worker will be stopped on next execution and not mid-execution. Meaning that it'll execute until the end and won't keep looping until the time's done.
+If you want to pause mid-call we recommend you use Citizen.CreateThread
+:::
+
+```jsx title="sprint Example"
+-- ... name is the name of the worker.
+-- time the time you want to pause it, in miliseconds
+
+local called = false
+
+Faith.CreateWorker(function() 
+    if called then
+        print("here we go again, 5 seconds later")
+    end
+    
+    print("i got called")
+    
+    Faith.PauseWorker(5000) --Will pause the worker for 5 seconds
+    
+    print("i also get called because pauseworker does not take effect until it's fully executed)
+    called = true  
+end)
+```

@@ -1,0 +1,21 @@
+---
+sidebar_position: 1
+---
+
+# Event API
+
+Our Lua Executor has an Event system that is used to communicate between the menu and lua, it can also be used to communicate across lua scripts.
+
+## Functions
+
+The event API consists of two functions, Faith.RegisterEvent (for registering event listeners) and Faith.FireEvent (to fire, or execute the events).
+
+
+## Built-In events.
+
+The menu comes with Built-In events that will be fired when certain conditions are met, a new player joining, a player being detected as a cheater etc...
+
+:::tip Performance Tip
+Using events will usually net a performance benefit instead of iterating over say a player list.
+Events callbacks will also automatically be called on the right thread, so you don't have to worry about that!
+:::

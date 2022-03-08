@@ -1,0 +1,16 @@
+---
+sidebar_position: 2
+---
+
+# Faith.RegisterEvent
+
+### Faith.RegisterEvent
+Registers an event listener, that will be called when said event is fired. For built-in events check below.
+
+```jsx title="RegisterEvent Example"
+Faith.RegisterEvent("OnModderDetection", function(playerHandle, playerName, reason)
+
+if GTA.IsModder(playerHandle) then
+print(playerName, " is a modder because ", reason).
+end
+```

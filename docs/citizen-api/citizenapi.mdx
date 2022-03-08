@@ -1,0 +1,22 @@
+---
+sidebar_position: 1
+---
+
+# Citizen API Introduction
+
+The citizen API is a compability layer with the Citizen Lua API (FiveM scripts).
+
+:::danger Not everything is supported
+This is currently in beta and not everything is supported (namely some natives have slightly different names etc...) So you can't paste some FiveM scripts.
+
+We don't and we will never support NUI, implementing NUI would make the menu bloated and be a fucking pain in the ass to develop. You don't need a chromium browser to make a menu come on.
+:::
+
+## Threads
+Citizen-style threads, they do have some advantages over Faith workers such as being able to yield them mid-function, Faith workers on the other hand are more lightweight so if you are developing for Faith consider using workers for a little more performance.
+
+## Regarding Natives
+Most natives will have the same definition as the FiveM ones, same name params...
+However some will be different so you might have to fix niche natives.
+
+The API also doesn't support CFX  namespace natives as we are on gta5 and not FiveM.

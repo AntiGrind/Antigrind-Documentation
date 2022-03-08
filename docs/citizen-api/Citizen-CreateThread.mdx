@@ -1,0 +1,14 @@
+---
+sidebar_position: 2
+---
+
+# Citizen.CreateThread
+
+### Citizen.CreateThread
+Creates and runs a new thread, used to run code asynchronously. MAKE SURE TO AT LEAST HAVE A Citizen.Wait INSIDE IT OR YOU WILL PROBABLY FREEZE THE GAME.
+
+```jsx title="CreateThread Example"
+-- fn is the function that will be called in the thread
+
+Citizen.CreateThread(fn)
+```
