@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 # Event API
@@ -19,3 +19,26 @@ The menu comes with Built-In events that will be fired when certain conditions a
 Using events will usually net a performance benefit instead of iterating over say a player list.
 Events callbacks will also automatically be called on the right thread, so you don't have to worry about that!
 :::
+
+### Faith.RegisterEvent
+Registers an event listener, that will be called when said event is fired. For built-in events check below.
+
+```jsx title="RegisterEvent Example"
+Faith.RegisterEvent("OnModderDetection", function(playerHandle, playerName, reason)
+
+if GTA.IsModder(playerHandle) then
+print(playerName, " is a modder because ", reason).
+end
+```
+
+### Faith.FireEvent
+Manually fires an event with the given arguments.
+
+```jsx title="FireEvent and Custom Events Example"
+Faith.FireEvent("Hello World", 69, true, "goodbye")
+
+Faith.RegisterEvent("Hello World", function(a,b,c)
+print(a,b) --prints "69truegoodbye"
+end)
+
+```

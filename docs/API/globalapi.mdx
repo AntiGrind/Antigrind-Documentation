@@ -1,0 +1,50 @@
+---
+sidebar_position: 4
+---
+
+# Script Globals API
+
+The GTA Scripts use globals to store information and communicate across each other, manipulating these globals can net very interesting results. 
+Therefore we expose this API to our Lua Developers so they can go beyond what you can do with just natives.
+
+## Functions
+
+Quite simple, you have a function to write globals, and three functions to read globals (one for each type, float, int or bool).
+
+### GTA.WriteScriptGlobal
+Writes the value to your global var of choice, it'll automatically detect the type, whether it's float int or bool, so you don't have to worry about that when writing.
+
+```jsx title="WriteScriptGlobal Example"
+-- globalIndex is the global variable index that you want to write to. This can be found in the GTA scripts.
+-- value is the value
+GTA.WriteScriptGlobal(globalIndex, value)
+```
+
+### GTA.ReadScriptGlobalInt
+Reads and returns the value of the global provided and assumes it's an integer.
+
+```jsx title="ReadScriptGlobalInt Example"
+-- globalIndex is the global variable index that you want to read from. This can be found in the GTA scripts.
+
+print(GTA.ReadScriptGlobalInt(globalIndex))
+```
+
+### GTA.ReadScriptGlobalFloat
+Reads and returns the value of the global provided and assumes it's an float.
+
+```jsx title="ReadScriptGlobalFloat Example"
+-- globalIndex is the global variable index that you want to read from. This can be found in the GTA scripts.
+
+print(GTA.ReadScriptGlobalFloat(globalIndex))
+
+```
+
+### GTA.ReadScriptGlobalBool
+Reads and returns the value of the global provided and assumes it's a boolean.
+
+```jsx title="ReadScriptGlobalBool Example"
+-- globalIndex is the global variable index that you want to read from. This can be found in the GTA scripts.
+
+print(GTA.ReadScriptGlobalBool(globalIndex))
+
+```

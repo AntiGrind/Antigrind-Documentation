@@ -1,0 +1,115 @@
+---
+sidebar_position: 6
+---
+
+# Utility API
+
+These are functions that will come in handy when coding.
+
+### GTA.IsFriend
+Returns whether the player is Host, or not.
+
+```jsx title="IsFriend Example"
+-- handle is the player handle as always.
+print(GTA.IsFriend(Handle))) --"true"
+```
+
+### GTA.IsHost
+Returns whether the player is Host, or not.
+
+```jsx title="IsHost Example"
+print(GTA.IsHost())) --"true"
+```
+
+### GTA.IsModder
+Returns whether the player is a modder, or not.
+
+```jsx title="IsModder Example"
+-- handle is the player handle as always.
+
+print(GTA.IsModder(handle)) --"true"
+```
+
+### GTA.MarkAsModder
+If you want to make your own modder detections use this, this marks the player as modder in the menu and broadcasts a OnModderDetection event.
+Try using this only if you are sure, avoid false positives.
+
+```jsx title="MarkAsModder Example"
+-- handle is the player handle as always.
+-- reason is a string containing the reason why you marked this person as a modder.
+
+GTA.MarkAsModder(handle, reason)
+```
+
+### Faith.GetGame
+Returns a string of what game the API is running on. In our case it'll always be "Grand Theft Auto V".
+You can use it if you want to code multiplatform for the Faith API as it's a generic Lua Environment for games.
+
+```jsx title="Faith.GetGame Example"
+
+print(Faith.GetGame()) --"Grand Theft Auto V"
+```
+
+### Faith.GetTime
+Returns the current times.
+
+```jsx title="Faith.GetTime Example"
+
+print(Faith.GetTime()) --Some numbers lmao
+```
+
+### print
+Prints what you provide on the log, it's able to print almost any type of variable and supports an unlimited amount of arguments.
+
+```jsx title="print Example"
+-- ... means an unlimited amount of arguments and in this case all types should be supported.
+
+print(...)
+```
+
+### sprint
+Works the same as print but instead of outputting to log it returns the string, useful if you want to turn numbers and stuff into a string. And for formatting.
+
+```jsx title="sprint Example"
+-- ... means an unlimited amount of arguments and in this case all types should be supported.
+
+something = sprint(...)
+```
+
+### vector2
+Vector2 constructor.
+
+```jsx title="vector2 Example"
+-- x and y are floats.
+
+myVector = vector2(x,y)
+```
+
+### vector3
+Vector3 constructor, you might need it for natives.
+
+```jsx title="vector3 Example"
+-- x,y and z are floats.
+
+myVector = vector3(x,y,z)
+```
+
+### vector4
+Vector4 constructor.
+
+```jsx title="vector3 Example"
+-- x,y,z and w are floats.
+
+myVector = vector4(x,y,z,w)
+```
+
+### vec
+Overloads vector2, vector3 and vector4 into a single function. Automatically counts the amount of arguments you pass it and either returns a vector2,3,4 depending on how many you passed.
+
+```jsx title="vec Example"
+-- ... in this case are float values and you must pass anything between 2 values and 4 values. No more no less.
+
+myVector4 = vec(x,y,z,w) --Vector4
+myVector3 = vec(x,y,z) --Vector3
+myVector2 = vec(x,y) --Vector2
+```

@@ -1,0 +1,347 @@
+---
+sidebar_position: 8
+---
+
+# Crypt API
+
+## Simple Crypt
+
+### Crypt.EncryptSecureString
+Encrypts data with key (algorithm used is AES, with CBC as cipher, encoded as base64, random iv/nonce generated per call).
+
+
+```jsx title="EncryptSecureString Example"
+Crypt.EncryptSecureString("Data Input", "Key"); --Returns encrypted data encoded as a (printable) string
+```
+Identical to EncryptString, except the clear-text contained within the SecureString is encrypted and returned.
+
+### Crypt.DecryptSecureString
+Decrypts data with key
+
+```jsx title="DecryptSecureString Example"
+local encStr = Crypt.EncryptSecureString("Data Input", "Key"); --Returns encrypted data encoded as a (printable) string
+Crypt.DecryptSecureString(encStr, "Key");--Returns the Decrypted String
+```
+
+### Crypt.EncryptString
+Encrypts data with key (algorithm used is AES, with CBC as cipher, encoded as base64, random iv/nonce generated per call).
+
+```jsx title="EncryptString Example"
+Crypt.EncryptString("Data Input", "Key"); --String Return
+```
+
+### Crypt.DecryptString
+Decrypts data with key
+
+```jsx title="DecryptString Example"
+local encStr = Crypt.EncryptString("Data Input", "Key"); --Returns encrypted data encoded as a (printable) string
+Crypt.DecryptString(encStr, "Key");--Returns the Decrypted String
+```
+
+### Crypt.HashString
+Hashes data with sha-512, encoded as hex.
+
+```jsx title="HashString Example"
+Crypt.HashString("Data Input"); --Returns Hashed data encoded as a (printable) string
+```
+
+### Crypt.EncodeBase64
+Encodes data with base64.
+
+```jsx title="EncodeBase64 Example"
+Crypt.EncodeBase64("Data Input"); --Returns data encoded in base64 string
+```
+
+### Crypt.DecodeBase64
+Decodes data with base64.
+
+```jsx title="DecodeBase64 Example"
+local enc = Crypt.DecodeBase64("Data Input"); --Returns data encoded in base64 string
+Crypt.DecodeBase64(enc); -- Decodes encoded string. returns string
+```
+
+### Crypt.RandomString
+Generates a random string with size
+
+```jsx title="RandomString Example"
+Crypt.RandomString(10); --Returns a random string with size of 20
+--Example ouput: BuaUcbaJcu
+```
+
+### Crypt.RandomIntString
+Generates a random Intstring with size
+
+```jsx title="RandomIntString Example"
+Crypt.RandomIntString(10); --Returns a random Intstring with size of 20
+--Example ouput: 8369261548
+```
+
+## Custom Crypt
+
+### Crypt.EncryptSecureString
+Encrypts data with key using selected encryption, cipher, keysize, encoding and iv/nonce.
+
+```jsx title="EncryptSecureString Example"
+--returns <string> Crypt.EncryptSecureString(<string> data, <string> encryption, <string> cipher, <int> keySize, <string> key, <string> iv, <string> encoding); 
+
+Crypt.EncryptSecureString("hello there", "aes", "cbc", 256, "randomKey", "randomIV", "hex");
+```
+Identical to EncryptString, except the clear-text contained within the SecureString is encrypted and returned.
+
+### Crypt.DecryptSecureString
+Decrypts data with key using selected encryption, cipher, keysize, encoding and iv/nonce.
+
+```jsx title="DecryptSecureString Example"
+--returns <string> Crypt.DecryptSecureString(<string> data, <string> encryption, <string> cipher, <int> keySize, <string> key, <string> iv, <string> encoding); 
+local enc = Crypt.EncryptSecureString("hello there", "aes", "cbc", 256, "randomKey", "randomIV", "hex");
+Crypt.DecryptSecureString(enc, "aes", "cbc", 256, "randomKey", "randomIV", "hex") --Suggested to generate Randomkey/IV using Crypt.RandomIntString on production.
+```
+
+### Crypt.EncryptString
+Encrypts data with key using selected encryption, cipher, keysize, encoding and iv/nonce.
+
+```jsx title="EncryptString Example"
+--returns <string> Crypt.EncryptString(<string> data, <string> encryption, <string> cipher, <int> keySize, <string> key, <string> iv, <string> encoding); 
+
+Crypt.EncryptString("hello there", "aes", "cbc", 256, "randomKey", "randomIV", "hex");
+```
+
+### Crypt.DecryptString
+Decrypts data with key using selected encryption, cipher, keysize, encoding and iv/nonce.
+
+```jsx title="DecryptString Example"
+--returns <string> Crypt.DecryptString(<string> data, <string> encryption, <string> cipher, <int> keySize, <string> key, <string> iv, <string> encoding); 
+local enc = Crypt.EncryptString("hello there", "aes", "cbc", 256, "randomKey", "randomIV", "hex");
+Crypt.DecryptString(enc, "aes", "cbc", 256, "randomKey", "randomIV", "hex") --Suggested to generate Randomkey/IV using Crypt.RandomIntString on production.
+```
+
+### Crypt.HashString
+Hashes data with algorithm, charset and encoding.
+
+```jsx title="HashString Example"
+--returns <string> Crypt.HashString(<string> data, <string> hashAlgorithm, <string> charset, <string> encoding); 
+Crypt.HashString("Data Input", "sha512", "utf-8", "base64"); --Returns Hashed data encoded as a (printable) string
+```
+
+### Crypt.EncodeString
+Encodes data with encoding and charset.
+
+```jsx title="EncodeString Example"
+--returns <string> Crypt.EncodeString(<string> data, <string> charset, <string> encoding); 
+Crypt.EncodeString("Data Input", "utf-8", "base64"); --Returns data encoded as a (printable) string
+```
+
+### Crypt.DecodeString
+Decodes data with encoding and charset.
+
+```jsx title="EncodeString Example"
+--returns <string> Crypt.DecodeString(<string> data, <string> charset, <string> encoding); 
+local encoded = Crypt.EncodeString("Data Input", "utf-8", "base64"); --Returns data encoded as a (printable) string
+Crypt.DecodeString(encoded, "utf-8", "base64"); --Returns data decoded as a (printable) string
+```
+
+
+### Crypt.EncodeInt
+Encodes an integer to N bytes and returns in the specified encoding. If littleEndian is true, then little endian byte ordering is used. Otherwise big-endian byte order is used.
+
+```jsx title="EncodeInt Example"
+--returns <string> Crypt.EncodeInt(<int> data, <int> numBytes>, <bool> littleEndian, <string> encoding); 
+// Write the integer in 8 bytes using little-endian byte-order and return as hex
+Crypt.EncodeInt(1193046, 8, 1, "hex"); --Returns data encoded as a (printable) string 
+```
+
+### Crypt.DecodeInt
+Decode an Encoded Integer back to integer
+
+```jsx title="DecodeInt Example"
+--returns <int> Crypt.DecodeInt(<string> data, <string> encoding); 
+// Write the integer in 8 bytes using little-endian byte-order and return as hex
+local encoded = Crypt.EncodeInt(1193046, 8, 1, "hex"); --Returns data encoded as a (printable) string 
+Crypt.DecodeInt(encoded, "hex");
+```
+
+### Cipher & Encryption Algorithms
+
+## All Supported Encryption Algorithms
+
+| Algorithm |
+|-----------|
+| aes       |
+| blowfish  |
+| twofish   |
+| des       |
+| 3des      |
+| rc2       |
+| chacha20  |
+| pki       |
+| arc4      |
+| pbes1     |
+| pbes2     |
+
+
+## Encryption Algorithms that support all Ciphers
+
+| Algorithm |
+|-----------|
+| aes       |
+| blowfish  |
+| twofish   |
+| des       |
+| 3des      |
+| rc2       |
+
+:::danger Not everything supports all Ciphers
+Anything else that isn't mentioned on this chart above, does not support every Cipher.
+If it's not on the list above it supports CFB & OFB as Cipher. (chacha20, pki, arc4, pbes1, pbes2 only support CFB & OFB)
+:::
+
+## Cipher
+| Cipher | Full name             |
+|--------|-----------------------|
+| cbc    | Cipher Block Chaining |
+| ecb    | Electronic CookBook   |
+| ctr    | Counter Mode          |
+| cfb    | Cipher Feedback       |
+| ofb    | Output Feedback       |
+| gcm    | Galois/Counter Mode   |
+
+### Hashing Algorithms
+
+Supported Hashing algorithms
+
+| MD  | SHA1 |  SHA2  |   SHA3   |   RIPEMD  | HAVAL |
+|-----|------|:------:|:--------:|:---------:|-------|
+| md2 | sha1 | sha256 | sha3-224 | ripemd128 | haval |
+| md5 |      | sha384 | sha3-256 | ripemd160 |       |
+|     |      | sha512 | sha3-384 | ripemd256 |       |
+|     |      |        | sha3-512 | ripemd320 |       |
+
+
+### Encoding Identifiers
+
+Throughout the Crypt API there are method arguments and properties to indicate an encoding. These are encodings for binary data such as “hex”, “base64”, etc.
+
+Note: These are not character encodings. A character encoding, such as “utf-8” indicates the byte representation of a character. A binary encoding, such as “base64”, represents non-character binary data in printable string form.
+
+Wherever an encoding method argument or property exists, the list of valid encodings supported by Antigrind are as follows:
+
+| Encoding    | Extra Notes                                  |
+|-------------|----------------------------------------------|
+| base64      |                                              |
+| hex         |                                              |
+| hexlower    |                                              |
+| modbase64   |                                              |
+| base32      |                                              |
+| base58      |                                              |
+| uu          |                                              |
+| qp          | For quoted printable                         |
+| url         | For url encoding                             |
+| Q           | For MIME Q Encoding                          |
+| B           | For MIME B Encoding                          |
+| url_oauth   |                                              |
+| url_rfc1738 |                                              |
+| url_rfc2396 |                                              |
+| url_rfc3986 |                                              |
+| fingerprint |                                              |
+| decimal     |                                              |
+| eda         | For UN/EDIFACT Syntax Level A Char Set       |
+| json        | for escapingand unescaping JSON strings      |
+| decList     |                                              |
+| base64_mime | Same as “base64” output is in lines MIME/PEM |
+| ascii85     |                                              |
+
+Antigrind is case-insensitive for recognizing an encoding by name.  For example “Base64” and “base64” are both recognized as “base64”.
+Extra notes:
+The “fingerprint” encoding is a lowercase hex encoding where each hex digit is separated by a colon character.  For example: 6a:de:e0:af:56:f8:0c:04:11:5b:ef:4d:49:ad:09:23
+
+The “decimal” encoding is for converting large decimal integers to/from a big-endian binary representation.  For example, the decimal string “72623859790382856” converts to the bytes 0x01 0x02 0x03 0x04 0x05 0x06 0x07 0x08.
+
+The “decList” encoding is for converting comma-separated lists of decimal integers to bytes and back.  For example, “84, 104, 101, 32, 116, 114, 117, 101, 32, 115, 105, 103, 110”.  Each decimal integer is a value from 0 to 255.
+
+### Charset identifiers
+
+When working with strings, it is important to know the exact bytes that are being encrypted/hashed/signed/compressed.
+This is critical when interoperating with other systems.
+If your application is sending an encrypted string to another system that will decrypt it, 
+will need to know the encoding of the string that is expected on the receiving end (after decryption).
+
+
+| Charset           |
+|-------------------|
+|ansi               |
+|us-ascii           |
+|unicode            |
+|unicodefffe        |
+|iso-8859-1         |
+|iso-8859-2         |
+|iso-8859-3         |
+|iso-8859-4         |
+|iso-8859-5         |
+|iso-8859-6         |
+|iso-8859-7         |
+|iso-8859-8         |
+|iso-8859-9         |
+|iso-8859-13        |
+|iso-8859-15        |
+|windows-874        |
+|windows-1250       |
+|windows-1251       |
+|windows-1252       |
+|windows-1253       |
+|windows-1254       |
+|windows-1255       |
+|windows-1256       |
+|windows-1257       |
+|windows-1258       |
+|utf-7              |
+|utf-8              |
+|utf-32             |
+|utf-32be           |
+|shift_jis          |
+|gb2312             |
+|ks_c_5601-1987     |
+|big5               |
+|iso-2022-jp        |
+|iso-2022-kr        |
+|euc-jp             |
+|euc-kr             |
+|macintosh          |
+|x-mac-japanese     |
+|x-mac-chinesetrad  |
+|x-mac-korean       |
+|x-mac-arabic       |
+|x-mac-hebrew       |
+|x-mac-greek        |
+|x-mac-cyrillic     |
+|x-mac-chinesesimp  |
+|x-mac-romanian     |
+|x-mac-ukrainian    |
+|x-mac-thai         |
+|x-mac-ce           |
+|x-mac-icelandic    |
+|x-mac-turkish      |
+|x-mac-croatian     |
+|asmo-708           |
+|dos-720            |
+|dos-862            |
+|ibm037             |
+|ibm437             |
+|ibm500             |
+|ibm737             |
+|ibm775             |
+|ibm850             |
+|ibm852             |
+|ibm855             |
+|ibm857             |
+|ibm00858           |
+|ibm860             |
+|ibm861             |
+|ibm863             |
+|ibm864             |
+|ibm865             |
+|cp866              |
+|ibm869             |
+|ibm870             |
+|cp875              |
+|koi8-r             |
+|koi8-u             |

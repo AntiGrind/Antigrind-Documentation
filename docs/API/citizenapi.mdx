@@ -20,3 +20,30 @@ Most natives will have the same definition as the FiveM ones, same name params..
 However some will be different so you might have to fix niche natives.
 
 The API also doesn't support CFX  namespace natives as we are on gta5 and not FiveM.
+
+### Citizen.CreateThread
+Creates and runs a new thread, used to run code asynchronously. MAKE SURE TO AT LEAST HAVE A Citizen.Wait INSIDE IT OR YOU WILL PROBABLY FREEZE THE GAME.
+
+```jsx title="CreateThread Example"
+-- fn is the function that will be called in the thread
+
+Citizen.CreateThread(fn)
+```
+
+### Citizen.Wait
+Yields (or pauses) the current thread for the specified time.
+
+```jsx title="Wait Example"
+-- time is the time the thread will be yielded in milliseconds.
+
+Citizen.Wait(time)
+```
+
+### Citizen.Trace
+In our API all this does is the same as print
+
+```jsx title="CreateThread Example"
+-- ... the arguments to print
+
+Citizen.Trace("Hello", " World", 42069)
+```
