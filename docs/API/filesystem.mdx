@@ -1,0 +1,87 @@
+---
+sidebar_position: 7
+---
+
+# Filesystem API
+
+The path is always to Documents/Antigrind/Workshop you can't get out of that folder. 
+So when doing for example FS.WriteFile("something.txt", "") it will create something.txt in the workshop folder.
+
+## File API
+
+### FS.WriteFile
+write data to file, if file doesn't exist it will also create it. 
+
+```jsx title="WriteFile Example"
+FS.WriteFile("example.txt", "Example data"); --returns bool if it worked or not.
+```
+
+### FS.AppendFile
+appends data to file
+
+```jsx title="AppendFile Example"
+FS.AppendFile("example.txt", "Example data"); --returns bool if it worked or not.
+```
+
+### FS.ReadFile
+write data to file, if file doesn't exist it will also create it. 
+
+```jsx title="ReadFile Example"
+FS.ReadFile("example.txt"); --returns the txt of that file. 
+-- it can also return "Failed to open/read file" as a string when it fails
+```
+
+### FS.ExecuteFromFile
+Execute script from specific file 
+
+:::danger Has to be lua script
+It will fail to execute if it's not a lua script, or has errors in it.
+:::
+
+```jsx title="ExecuteFromFile Example"
+FS.ExecuteFromFile("example.txt"); --returns bool if it worked or failed
+```
+
+### FS.IsvalidFile
+Returns true if file exists
+
+```jsx title="IsvalidFile Example"
+FS.IsvalidFile("example.txt"); --returns bool if file exists or not
+```
+
+### FS.IsvalidFile2
+Returns 1 if the file exists, 0 if the file does not exist, and -1 if unable to check because of directory permissions or some other error that prevents the ability to obtain the information.
+
+```jsx title="IsvalidFile2 Example"
+FS.IsvalidFile2("example.txt"); --returns int if file exists or not
+```
+
+## Folder API
+
+### FS.MakeFolder
+Creates Folder in Workshop folder
+
+```jsx title="MakeFolder Example"
+FS.MakeFolder("example"); --returns bool if succesfully created or not
+```
+
+### FS.RemoveFolder
+Removes Folder in Workshop folder
+
+```jsx title="RemoveFolder Example"
+FS.RemoveFolder("example"); --returns bool if succesfully Removed or not
+```
+
+### FS.IsValidFolder
+Checks if folder exists
+
+```jsx title="IsValidFolder Example"
+FS.IsValidFolder("example"); --returns bool if folder exists or not
+```
+
+### FS.RemoveTree
+Deletes an entire directory tree (all files and sub-directories).
+
+```jsx title="RemoveTree Example"
+FS.RemoveTree("example"); --returns bool if succesfully removed or not
+```
