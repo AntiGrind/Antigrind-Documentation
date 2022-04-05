@@ -1,0 +1,161 @@
+---
+sidebar_position: 2
+---
+
+# Draw API
+
+## Drawing Functions
+
+Use these functions to draw custom shapes and stuff.
+
+:::warning **Warning:** Read this or it won't work
+These must be called inside a loop, either Faith.CreateWorker or a Citizen.CreateThread with a loop and it's Citizen.Wait(0).
+:::
+
+### Faith.DrawApiW2S
+
+- Turns a 3d (Vector3) vector into screen coordinates. World to Screen. Use this for ESP and other stuff that you want to draw using game coords.
+
+```jsx title="DrawApiW2S Example"
+-- <Vector2> Faith.DrawApiW2S(Vector3 coords)
+local v2 = Faith.DrawApiW2S(GetEntityCoords(PlayerPedId(), 0)) --Returns where your ped would be on screen cooords.
+```
+
+### Faith.DrawApiLine
+
+- Draws a line from point A to point B.
+
+```jsx title="DrawApiLine Example"
+-- <void> Faith.DrawApiLine(int iMin_x, int iMin_y, int iMax_x, int iMax_y, int iThiccness, int r, int g, int b, int a)
+Faith.DrawApiLine(0, 0, 4000, 4000, 10, 255, 0, 0, 150) --Draws a semi transparent red line starting from the top left of the screen.
+```
+
+### Faith.DrawApiRect
+
+- Draws a non-filled rectangle.
+
+
+```jsx title="DrawApiRect Example"
+-- <void> Faith.DrawApiRect(int iMin_x, int iMin_y, int iMax_x, int iMax_y, int r, int g, int b, int a, float rounding, float thiccness)
+Faith.DrawApiRect(50, 50, 500, 500, 0, 255, 150, 255, 5, 5) --Draws a bluish green empty rectangle at the top left of the screen.
+```
+
+### Faith.DrawApiRectFilled
+
+- Draws a filled rectangle.
+
+
+```jsx title="DrawApiRectFilled Example"
+-- <void> Faith.DrawApiRect(int iMin_x, int iMin_y, int iMax_x, int iMax_y, int r, int g, int b, int a, float rounding)
+Faith.DrawApiRect(50, 50, 500, 500, 0, 255, 150, 255, 5) --Draws a bluish green rectangle at the top left of the screen.
+```
+
+
+### Faith.DrawApiCircle
+
+- Draws an empty circle
+
+
+```jsx title="DrawApiCircle Example"
+-- <void> DrawApiCircle(int iPos_x, int iPos_y, int iRadius, int r, int g, int b, int a, int iThiccness)
+Faith.DrawApiCircle(50, 50, 20, 0, 0, 255, 255, 5) --Draws a blue empty circle at the top left
+```
+
+### Faith.DrawApiCircleFilled
+
+- Draws a filled circle
+
+
+```jsx title="DrawApiCircle Example"
+-- <void> DrawApiCircle(int iPos_x, int iPos_y, int iRadius, int r, int g, int b, int a)
+Faith.DrawApiCircle(50, 50, 20, 0, 0, 255, 255) --Draws a blue filled circle at the top left
+```
+
+### Faith.DrawApiText
+
+- Draws text
+
+
+```jsx title="DrawApiText Example"
+-- <void> DrawApiText(int iPos_x, int iPos_y, string text, int r, int g, int b, int a)
+Faith.DrawApiText(50, 50, "Amogus", 255, 0, 0, 255) -- Draws a red Amogus at the top left.
+```
+
+### Faith.FontSizePush & Faith.FontSizePop
+
+- Changes the font size of Faith.DrawApiText calls if said calls are between the Push and Pop.
+
+
+```jsx title="FontSizePush/Pop Example"
+-- <void> FontSizePush(float size) --Change font size until pop is called
+-- <void> FontSizePop()  --Make sure to always call, stops changing font size after this call.
+Faith.FontSizePush(72) --Changes font size to 72
+Faith.DrawApiText(50, 50, "Amogus", 255, 0, 0, 255) -- Draws a red Amogus (size: 72) at the top left.
+Faith.FontSizePop() -- Stops changing font size
+```
+
+### Faith.DrawApiText
+
+- Overload for DrawApiText which draws text but specifies font size too, instead of using Push/Pop.
+
+
+```jsx title="DrawApiText Example"
+-- <void> DrawApiTextWithFontSize(int iPos_x, int iPos_y, std::string text, int r, int g, int b, int a, float fontSize)
+Faith.DrawApiText(50, 50, "Amogus", 255, 0, 0, 255, 32) -- Draws a red Amogus (size 32) at the top left.
+```
+
+### Faith.DrawApiPicture
+
+- After loading a picture with LoadPicture/FromUrl/Mugshot you can draw it on your screen with this.
+
+
+```jsx title="DrawApiText Example"
+-- <bool> DrawApiPicture(std::string identifier, float iMin_x, float iMin_y)
+Faith.DrawApiPicture("amogus", 50, 50) --Loads the amogus picture we downloaded to memory before and draws it at the top left of the screen, preserving the original size.
+```
+
+### Faith.DrawApiPictureEx
+
+- After loading a picture with LoadPicture/FromUrl/Mugshot you can draw it on your screen with this.
+- With DrawApiPictureEx we can specify a custom size for the picture
+
+
+```jsx title="DrawApiTextEx Example"
+-- <bool> rawApiPictureEx(std::string identifier, float iMin_x, float iMin_y, float iMax_x, float iMax_y)
+Faith.DrawApiPicture("amogus", 50, 50, 500,500) --Loads the amogus picture we downloaded to memory before and draws it at the top left of the screen, with a 450x450 size.
+```
+
+
+
+## Initializer Functions
+:::warning **Warning:** Read this or crash
+These functions must be called only once, as they are used to initialize stuff.
+For example loading images to memory.
+:::
+
+### Faith.LoadPicture
+
+- Loads a picture from a file to memory, so you can draw it later. Do this BEFORE drawing a picture.
+
+```jsx title="LoadPicture Example"
+-- <bool> LoadPicture(std::string identifier, std::string filename)
+Faith.LoadPicture("myImage", "amogus.png") -- Loads amogus.png from Documents\AntiGrind\Downloads\ and gives it the myImage identifier. (Use the identifier on DrawApiPicture/Ex). Function returns false if there was a problem.
+```
+
+### Faith.LoadPictureFromUrl
+
+- Loads a picture from a URL to memory, so you can draw it later. Do this BEFORE drawing a picture.
+
+```jsx title="LoadPictureFromUrl Example"
+-- <bool> LoadPictureFromUrl(std::string identifier, std::string filename, std::string url)
+Faith.LoadPictureFromUrl("myImage", "amogus.png", "https://i.imgur.com/sm4Id90.png") -- Downloads amogus.png to Documents\AntiGrind\Downloads\ from "https://i.imgur.com/sm4Id90.png" and gives it the myImage identifier. (Use the identifier on DrawApiPicture/Ex). Function returns false if there was a problem.
+```
+
+### GTA.LoadPictureMugshot
+
+- Loads a GTA Mugshot given a Rockstar ID to memory.
+
+```jsx title="LoadPictureMugshot Example"
+-- <bool> LoadPictureMugshot(std::string identifier, std::string RockstarID, int charIndex) --charIndex must be 0 or 1. MP0 and MP1 respectively, it's the character ID of the player.
+Faith.LoadPictureMugshot("SweetPlumbus", "99453882", 0) -- Downloads SweetPlumbus' first character's mugshot, and loads it to memory. (Use the identifier on DrawApiPicture/Ex). Function returns false if there was a problem.
+```
