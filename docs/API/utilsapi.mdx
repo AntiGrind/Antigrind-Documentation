@@ -1,5 +1,5 @@
 ---
-sidebar_position: 6
+sidebar_position: 14
 ---
 
 # Utility API
@@ -21,6 +21,26 @@ Returns whether the player is Host, or not.
 print(GTA.IsHost())) --"true"
 ```
 
+### GTA.IsPlayerHost
+Returns whether the player is host or not.
+
+```jsx title="IsPlayerHost Example"
+-- handle is the player handle as always.
+-- ret: true if the player is host, false if he isn't.
+
+<bool> GTA.IsPlayerHost(Player handle)
+```
+
+### GTA.IsPlayerScriptHost
+Returns whether the player is host of the "freemode" script.
+
+```jsx title="IsPlayerScriptHost Example"
+-- handle is the player handle as always.
+-- ret: true if the player is scripthost, false if he isn't.
+
+<bool> GTA.IsPlayerScriptHost(Player handle)
+```
+
 ### GTA.IsModder
 Returns whether the player is a modder, or not.
 
@@ -40,6 +60,98 @@ Try using this only if you are sure, avoid false positives.
 
 GTA.MarkAsModder(handle, reason)
 ```
+
+### GTA.UnmarkModder
+Regret marking someone as a modder? Run this and they'll be clean again.
+
+```jsx title="UnmarkModder Example"
+-- handle is the player handle as always.
+
+GTA.UnmarkModder(handle)
+```
+
+### GTA.SendSMS
+Sends a mobile message to the player. Voice chat must be enabled (no need to enable mic).
+
+```jsx title="SendSMS Example"
+-- handle is the player handle as always.
+-- sms is the content of the sms
+
+<void> GTA.SendSMS(handle, sms)
+```
+
+### GTA.GetPlayerInfo
+Returns the Players info.
+
+Returns a table containing all kinds of information of the player. You can access info using these table keys
+
+| **Table** |          |       |             |             |
+|:---------:|----------|-------|-------------|-------------|
+|  ActiveID |  Friend  |  Host |   Interior  |  ScriptHost |
+|    SCTV   | VoteKick | Armor |    Health   |   Position  |
+| HostToken |   Name   |   Ip  | RockstarID1 | RockstarID2 |
+
+You can also access their GEO information such as City, Zipcode ect. You can access this table by putting ["GeoInfo"] as the first table and then Example "City" (table["GeoInfo"]["City"])
+
+| **GeoInfo** |           |              |        |
+|:-----------:|-----------|--------------|--------|
+|     City    |  Country  |  CountryCode |   ISP  |
+|   Latitude  | Longitude | Organization | Region |
+|  RegionName |  Timezone |    ZipCode   |        |
+
+
+```jsx title="GetPlayerInfo Example"
+-- handle is the player handle as always.
+-- ret: A table containing the player's Info.
+
+<table> GTA.GetPlayerInfo(Player handle)
+
+local playerInfo = GTA.GetPlayerInfo(-1)
+print("Player Name: " .. playerInfo["Name"])
+print("Player IP: " .. playerInfo["Ip"])
+print("Player City: " .. playerInfo["GeoInfo"]["City"])
+```
+
+### GTA.GetPlayerIp
+Returns the player's IP.
+
+```jsx title="GetPlayerIp Example"
+-- handle is the player handle as always.
+-- ret: A string containing the player's IP.
+
+<string> GTA.GetPlayerIp(Player handle)
+```
+
+### GTA.GetPlayerRID
+Returns both Rockstar IDs. If they are not the same the player is definitely spoofing.
+
+```jsx title="GetPlayerRID Example"
+-- handle is the player handle as always.
+-- ret: Two strings containing the two Rockstar IDs sent.
+
+<string, string> GTA.GetPlayerRID(Player handle)
+```
+
+### GTA.RemoveFromGame
+Removes the player from the current session.
+
+```jsx title="RemoveFromGame Example"
+-- handle is the player handle as always.
+
+<void> GTA.RemoveFromGame(Player handle)
+```
+
+### GTA.GetTransitionStatus
+Returns the currrent status of the game transition, useful to know if you are stuck, or how long until you join that slow ass game.
+
+```jsx title="GetTransitionStatus Example"
+-- handle is the player handle as always.
+-- ret: A string containing the current step in the transition status
+
+<string> GTA.GetTransitionStatus()
+```
+
+
 
 ### Faith.GetGame
 Returns a string of what game the API is running on. In our case it'll always be "Grand Theft Auto V".

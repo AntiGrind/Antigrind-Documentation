@@ -1,10 +1,10 @@
 ---
-sidebar_position: 7
+sidebar_position: 8
 ---
 
 # Filesystem API
 
-The path is always to Documents/Antigrind/Workshop you can't get out of that folder. 
+The path is always to Documents/Antigrind/Workspace you can't get out of that folder. 
 So when doing for example FS.WriteFile("something.txt", "") it will create something.txt in the workshop folder.
 
 ## File API
@@ -14,6 +14,13 @@ write data to file, if file doesn't exist it will also create it.
 
 ```jsx title="WriteFile Example"
 FS.WriteFile("example.txt", "Example data"); --returns bool if it worked or not.
+```
+
+### FS.RemoveFile
+Removes file
+
+```jsx title="RemoveFile Example"
+FS.RemoveFile("example.txt"); --returns bool if it worked or not.
 ```
 
 ### FS.AppendFile
@@ -42,18 +49,18 @@ It will fail to execute if it's not a lua script, or has errors in it.
 FS.ExecuteFromFile("example.txt"); --returns bool if it worked or failed
 ```
 
-### FS.IsvalidFile
+### FS.IsValidFile
 Returns true if file exists
 
-```jsx title="IsvalidFile Example"
-FS.IsvalidFile("example.txt"); --returns bool if file exists or not
+```jsx title="IsValidFile Example"
+FS.IsValidFile("example.txt"); --returns bool if file exists or not
 ```
 
-### FS.IsvalidFile2
+### FS.IsValidFile2
 Returns 1 if the file exists, 0 if the file does not exist, and -1 if unable to check because of directory permissions or some other error that prevents the ability to obtain the information.
 
-```jsx title="IsvalidFile2 Example"
-FS.IsvalidFile2("example.txt"); --returns int if file exists or not
+```jsx title="IsValidFile2 Example"
+FS.IsValidFile2("example.txt"); --returns int if file exists or not
 ```
 
 ## Folder API

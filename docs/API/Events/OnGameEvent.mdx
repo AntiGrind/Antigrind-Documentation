@@ -1,14 +1,13 @@
 ---
-sidebar_position: 7
+sidebar_position: 2
 ---
 
 # OnGameEvent
 
 ### OnGameEvent
-Gets called when a player send a gameEvent to you
+Game Events are low level events fired by the game, when something happens. It can be anything from reporting a crime to a gta online SMS or even presence stuff.
 
-| Argument     | Description        |
-|--------------|--------------------|
-| PlayerHandle | The Players Handle |
-| EventID      | the EventID        |
-| EventName    | The GameEvent Name |
+| Argument  | Description                              |
+|-----------|------------------------------------------|
+| Name      | The name of the event            		   |
+| args      | Table containing the arguments passed    |

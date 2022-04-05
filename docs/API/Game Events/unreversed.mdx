@@ -1,0 +1,18 @@
+---
+sidebar_position: 15
+---
+
+# Unreversed events
+
+If the event hasn't been mentioned it means it hasn't been reversed and there's no documentation for it.
+You may hook any game event even if it's not reversed, not being reversed just means that we won't be providing the parameters for it, you may still block them (might slightly break the game, like cherax does).
+Events that are not reversed are likely not of your interest though, we have focused in the most important ones for now.
+
+You can get a full list of events [here](https://docs.antigrind.net/docs/API/GameEvents/List). //this is gameeventlist file
+
+```jsx title="Parameters"
+-- Player handle / The player handle of the sending player.
+-- void* buffer / You currently can't use this, we will add support very soon within an update or two. You will be able to use this to read parameters even if they haven't been reversed (real advanced users only tho).
+-- size_t size / The size of the buffer.
+```
+```

@@ -1,0 +1,338 @@
+---
+sidebar_position: 12
+---
+
+# Hooking API
+
+Hooks work similarly to events, however hooks will not necesarily be called in a game thread, your hook callbacks will be called in whatever function is hooked, meaning that you must be mindful of what you do inside them.
+Some hooks might be called thousands of times per second, and thus you will have to optimize for them. Also some natives require to be called in a game thread or even in a certain game thread, we will not bypass that.
+Don't worry tho we will warn you about things you should know about specific hooks.
+
+It's not all bad stuff though, hooks are faster than events, hooks will also let you alter the outcome of the function. They can be very handy for protections, or anything really.
+
+### Hook.GameNetEvent
+Hooks the game's Net Event main handler, letting you manipulate these net events. We have also reversed the most important net events for you so unlike in other menus you can read their parameters (and for example make protections that don't break the whole game like cherax does).
+
+```jsx title="GameNetEvent Hook Example"
+-- handle is the player handle of the sender.
+-- evName is the name of the event, a list of those can be found [here](https://docs.antigrind.net/docs/API/GameEvents/EXPLOSION_EVENT).
+-- fn is the callback function, if you return false you will block the event from going through. It'll also be given a number of arguments depending on which event you hook.
+
+Hook.GameNetEvent("EXPLOSION_EVENT", function(handle, type, damage, audible, invisible, position, netId)
+ print(GetPlayerName(handle), " has done a explosion of type ", type)
+
+ if damage > 1000.f then
+ 	return false --Block Explosion
+ end
+
+ return true --Don't block explosion
+ end)
+```
+
+### Hook.ScriptEvent
+You might be familiar with these as menus do usually offer you Script Event configs, however they tend to be limited by exposing a Lua API you will be able to fully take control of them.
+You can obviously make protections by blocking bad events.
+
+
+```jsx title="ScriptEvent Hook Example"
+-- handle is the player handle of the sender.
+-- evHash is the hash of the Script Event
+-- args is a table containing the arguments passed to the event.
+
+Hook.ScriptEvent(0xed6f046, function(handle,evHash, args)
+
+-- 0xED6F046 seems to always be a CEO Kick event, we don't need to parse the args this time.
+return false
+
+ end)
+```
+
+### Hook.GameEvent
+These are low-level events that the game uses, it can be anything really. Stuff like reporting the crimes you commited, to receiving a SMS in gta online.
+Many of these events require specific reversing as their event objects are different from normal, many of those are not reversed and we will be returning a nil on the second param, sorry for that. You may still block those events should you want you just won't be able to read their parameters.
+
+
+```jsx title="GameEvent Hook Example"
+-- evName is the name of the event. There's a list of those below this.
+-- args is a table containing the arguments passed to the event, if this event needs specific reversing and hasn't been reversed we will return nil here, so make sure to check for it!
+
+Hook.GameEvent("CEventSuspiciousActivity", function(evName, args)
+ print("Stupid little bitch, stop doing sus shit")
+ return false --Block the event, no sussy no cop
+
+ end)
+```
+
+ 
+| Event Name | Explanation |
+| ---------- | ----------- |
+| CEventAcquaintancePed	| | 
+| CEventAcquaintancePedDead	| | 
+| CEventAcquaintancePedDislike	| | 
+| CEventAcquaintancePedHate	| | 
+| CEventAcquaintancePedLike	| | 
+| CEventAcquaintancePedWanted	| | 
+| CEventAgitated	| | 
+| CEventAgitatedAction	| | 
+| CEventCallForCover	| | 
+| CEventCarUndriveable	| | 
+| CEventClimbLadderOnRoute	| | 
+| CEventClimbNavMeshOnRoute	| | 
+| CEventCombatTaunt	| | 
+| CEventCommunicateEvent	| | 
+| CEventCopCarBeingStolen	| | 
+| CEventCrimeCryForHelp	| | 
+| CEventCrimeReported	| | 
+| CEventDamage	| | 
+| CEventDataDecisionMaker	| | 
+| CEventDataFileMounter	| | 
+| CEventDataResponseAggressiveRubberneck	| | 
+| CEventDataResponseDeferToScenarioPointFlags	| | 
+| CEventDataResponseFriendlyAimedAt	| | 
+| CEventDataResponseFriendlyNearMiss	| | 
+| CEventDataResponsePlayerDeath	| | 
+| CEventDataResponsePoliceTaskWanted	| | 
+| CEventDataResponseSwatTaskWanted	| | 
+| CEventDataResponseTask	| | 
+| CEventDataResponseTaskAgitated	| | 
+| CEventDataResponseTaskCombat	| | 
+| CEventDataResponseTaskCower	| | 
+| CEventDataResponseTaskCrouch	| | 
+| CEventDataResponseTaskDuckAndCover	| | 
+| CEventDataResponseTaskEscapeBlast	| | 
+| CEventDataResponseTaskEvasiveStep	| | 
+| CEventDataResponseTaskExhaustedFlee	| | 
+| CEventDataResponseTaskExplosion	| | 
+| CEventDataResponseTaskFlee	| | 
+| CEventDataResponseTaskFlyAway	| | 
+| CEventDataResponseTaskGrowlAndFlee |	| 
+| CEventDataResponseTaskGunAimedAt	| |
+| CEventDataResponseTaskHandsUp	|  |
+| CEventDataResponseTaskHeadTrack	| | 
+| CEventDataResponseTaskLeaveCarAndFlee	| | 
+| CEventDataResponseTaskScenarioFlee	| | 
+| CEventDataResponseTaskSharkAttack	| | 
+| CEventDataResponseTaskShockingEventBackAway	| | 
+| CEventDataResponseTaskShockingEventGoto	| | 
+| CEventDataResponseTaskShockingEventHurryAway	| | 
+| CEventDataResponseTaskShockingEventReact	| | 
+| CEventDataResponseTaskShockingEventReactToAircraft	| | 
+| CEventDataResponseTaskShockingEventStopAndStare	| | 
+| CEventDataResponseTaskShockingEventThreatResponse	| | 
+| CEventDataResponseTaskShockingEventWatch	| | 
+| CEventDataResponseTaskShockingNiceCar	| | 
+| CEventDataResponseTaskShockingPoliceInvestigate	| | 
+| CEventDataResponseTaskThreat	| | 
+| CEventDataResponseTaskTurnToFace	| | 
+| CEventDataResponseTaskWalkAway	| | 
+| CEventDataResponseTaskWalkRoundEntity	| | 
+| CEventDataResponseTaskWalkRoundFire	| | 
+| CEventDeadPedFound	| | 
+| CEventDeath	| | 
+| CEventDecisionMakerResponse	| | 
+| CEventDisturbance	| | 
+| CEventDraggedOutCar	| | 
+| CEventEditableResponse	| | 
+| CEventEncroachingPed	| | 
+| CEventEntityDamaged	| | 
+| CEventEntityDestroyed	| | 
+| CEventExplosion	| | 
+| CEventExplosionHeard	| | 
+| CEventFireNearby	| | 
+| CEventFootStepHeard	| | 
+| CEventFriendlyAimedAt	| | 
+| CEventFriendlyFireNearMiss	| | 
+| CEventGetOutOfWater	| | 
+| CEventGivePedTask	| | 
+| CEventGroupScriptAI	| | 
+| CEventGroupScriptNetwork	| | 
+| CEventGunAimedAt	| | 
+| CEventGunShot	| | 
+| CEventGunShotBulletImpact	| | 
+| CEventGunShotWhizzedBy	| | 
+| CEventHelpAmbientFriend	| | 
+| CEventHurtTransition	| | 
+| CEventInAir	| | 
+| CEventInfo	| | 
+| CEventInfoBase	| | 
+| CEventInjuredCryForHelp	| | 
+| CEventLeaderEnteredCarAsDriver	| | 
+| CEventLeaderExitedCarAsDriver	| | 
+| CEventLeaderHolsteredWeapon	| | 
+| CEventLeaderLeftCover	| | 
+| CEventLeaderUnholsteredWeapon	| | 
+| CEventMeleeAction	| | 
+| CEventMustLeaveBoat	| | 
+| CEventNetworkAdminInvited	| | 
+| CEventNetworkAttemptHostMigration	| | 
+| CEventNetworkBail	| | 
+| CEventNetworkCashTransactionLog	| | 
+| CEventNetworkCheatTriggered	| | 
+| CEventNetworkClanInviteReceived	| | 
+| CEventNetworkClanJoined	| | 
+| CEventNetworkClanKicked	| | 
+| CEventNetworkClanLeft	| | 
+| CEventNetworkClanRankChanged	| | 
+| CEventNetworkCloudEvent	| | 
+| CEventNetworkCloudFileResponse	| | 
+| CEventNetworkEmailReceivedEvent	| | 
+| CEventNetworkEndMatch	| | 
+| CEventNetworkEndSession	| | 
+| CEventNetworkEntityDamage	| | 
+| CEventNetworkFindSession	| | 
+| CEventNetworkFollowInviteReceived	| | 
+| CEventNetworkHostMigration	| | 
+| CEventNetworkHostSession	| | 
+| CEventNetworkIncrementStat	| | 
+| CEventNetworkInviteAccepted	| | 
+| CEventNetworkInviteConfirmed	| | 
+| CEventNetworkInviteRejected	| | 
+| CEventNetworkJoinSession	| | 
+| CEventNetworkJoinSessionResponse	| | 
+| CEventNetworkOnlinePermissionsUpdated	| | 
+| CEventNetworkPedLeftBehind	| | 
+| CEventNetworkPickupRespawned	| | 
+| CEventNetworkPlayerArrest	| | 
+| CEventNetworkPlayerCollectedAmbientPickup	| | 
+| CEventNetworkPlayerCollectedPickup	| | 
+| CEventNetworkPlayerCollectedPortablePickup	| | 
+| CEventNetworkPlayerDroppedPortablePickup	| | 
+| CEventNetworkPlayerJoinScript	| | 
+| CEventNetworkPlayerLeftScript	| | 
+| CEventNetworkPlayerScript	| | 
+| CEventNetworkPlayerSession	| | 
+| CEventNetworkPlayerSpawn	| | 
+| CEventNetworkPresenceInvite	| | 
+| CEventNetworkPresenceInviteRemoved	| | 
+| CEventNetworkPresenceInviteReply	| | 
+| CEventNetworkPresenceTriggerEvent	| | 
+| CEventNetworkPresence_StatUpdate	| | 
+| CEventNetworkPrimaryClanChanged	| | 
+| CEventNetworkRequestDelay	| | 
+| CEventNetworkRosChanged	| | 
+| CEventNetworkScAdminPlayerUpdated	| | 
+| CEventNetworkScAdminReceivedCash	| | 
+| CEventNetworkScriptEvent	| | 
+| CEventNetworkSessionEvent	| | 
+| CEventNetworkShopTransaction	| | 
+| CEventNetworkSignInStateChanged	| | 
+| CEventNetworkSocialClubAccountLinked	| | 
+| CEventNetworkSpectateLocal	| | 
+| CEventNetworkStartMatch	| | 
+| CEventNetworkStartSession	| | 
+| CEventNetworkStorePlayerLeft	| | 
+| CEventNetworkSummon	| | 
+| CEventNetworkSystemServiceEvent	| | 
+| CEventNetworkTextMessageReceived	| | 
+| CEventNetworkTimedExplosion	| | 
+| CEventNetworkTransitionEvent	| | 
+| CEventNetworkTransitionGamerInstruction	| | 
+| CEventNetworkTransitionMemberJoined	| | 
+| CEventNetworkTransitionMemberLeft	| | 
+| CEventNetworkTransitionParameterChanged	| | 
+| CEventNetworkTransitionStarted	| | 
+| CEventNetworkTransitionStringChanged	| | 
+| CEventNetworkVehicleUndrivable	| | 
+| CEventNetworkVoiceConnectionRequested	| | 
+| CEventNetworkVoiceConnectionResponse	| | 
+| CEventNetworkVoiceConnectionTerminated	| | 
+| CEventNetworkVoiceSessionEnded	| | 
+| CEventNetworkVoiceSessionStarted	| | 
+| CEventNetworkWithData	| | 
+| CEventNetwork_InboxMsgReceived	| | 
+| CEventNewTask	| | 
+| CEventObjectCollision	| | 
+| CEventOnFire	| | 
+| CEventOpenDoor	| | 
+| CEventPedCollisionWithPed	| | 
+| CEventPedCollisionWithPlayer	| | 
+| CEventPedEnteredMyVehicle	| | 
+| CEventPedJackingMyVehicle	| | 
+| CEventPedOnCarRoof	| | 
+| CEventPedSeenDeadPed	| | 
+| CEventPlayerCollisionWithPed	| | 
+| CEventPlayerDeath	| | 
+| CEventPlayerUnableToEnterVehicle	| | 
+| CEventPotentialBeWalkedInto	| | 
+| CEventPotentialBlast	| | 
+| CEventPotentialGetRunOver	| | 
+| CEventPotentialWalkIntoVehicle	| | 
+| CEventProvidingCover	| | 
+| CEventRanOverPed	| | 
+| CEventReactionEnemyPed	| | 
+| CEventReactionInvestigateDeadPed	| | 
+| CEventReactionInvestigateThreat	| | 
+| CEventRequestHelp	| | 
+| CEventRequestHelpWithConfrontation	| | 
+| CEventRespondedToThreat	| | 
+| CEventScanner	| | 
+| CEventScenarioForceAction	| | 
+| CEventScriptCommand	| | 
+| CEventScriptWithData	| | 
+| CEventShocking	| | 
+| CEventShockingBicycleCrash	| | 
+| CEventShockingBicycleOnPavement	| | 
+| CEventShockingCarAlarm	| | 
+| CEventShockingCarChase	| | 
+| CEventShockingCarCrash	| | 
+| CEventShockingCarOnCar	| | 
+| CEventShockingCarPileUp	| | 
+| CEventShockingDangerousAnimal	| | 
+| CEventShockingDeadBody	| | 
+| CEventShockingDrivingOnPavement	| | 
+| CEventShockingEngineRevved	| | 
+| CEventShockingExplosion	| | 
+| CEventShockingFire	| | 
+| CEventShockingGunFight	| | 
+| CEventShockingGunshotFired	| | 
+| CEventShockingHelicopterOverhead	| | 
+| CEventShockingHornSounded	| | 
+| CEventShockingInDangerousVehicle	| | 
+| CEventShockingInjuredPed	| | 
+| CEventShockingMadDriver	| | 
+| CEventShockingMadDriverBicycle	| | 
+| CEventShockingMadDriverExtreme	| | 
+| CEventShockingMugging	| | 
+| CEventShockingNonViolentWeaponAimedAt	| | 
+| CEventShockingParachuterOverhead	| | 
+| CEventShockingPedKnockedIntoByPlayer	| | 
+| CEventShockingPedRunOver	| | 
+| CEventShockingPedShot	| | 
+| CEventShockingPlaneFlyby	| | 
+| CEventShockingPotentialBlast	| | 
+| CEventShockingPropertyDamage	| | 
+| CEventShockingRunningPed	| | 
+| CEventShockingRunningStampede	| | 
+| CEventShockingSeenCarStolen	| | 
+| CEventShockingSeenConfrontation	| | 
+| CEventShockingSeenGangFight	| | 
+| CEventShockingSeenInsult	| | 
+| CEventShockingSeenMeleeAction	| | 
+| CEventShockingSeenNiceCar	| | 
+| CEventShockingSeenPedKilled	| | 
+| CEventShockingSiren	| | 
+| CEventShockingStudioBomb	| | 
+| CEventShockingVehicleTowed	| | 
+| CEventShockingVisibleWeapon	| | 
+| CEventShockingWeaponThreat	| | 
+| CEventShockingWeirdPed	| | 
+| CEventShockingWeirdPedApproaching	| | 
+| CEventShoutBlockingLos	| | 
+| CEventShoutTargetPosition	| | 
+| CEventShovePed	| | 
+| CEventSoundBase	| | 
+| CEventStatChangedValue	| | 
+| CEventStaticCountReachedMax	| | 
+| CEventStuckInAir	| | 
+| CEventSuspiciousActivity	| | 
+| CEventSwitch2NM	| | 
+| CEventUnidentifiedPed	| | 
+| CEventVehicleCollision	| | 
+| CEventVehicleDamage	| | 
+| CEventVehicleDamageWeapon	| | 
+| CEventVehicleOnFire	| | 
+| CEventWrithe| | 
+
+
+
+```

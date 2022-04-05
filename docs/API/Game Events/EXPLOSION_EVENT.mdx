@@ -1,0 +1,20 @@
+---
+sidebar_position: 1
+---
+
+# EXPLOSION_EVENT
+
+This event is called when another player explodes something. Any explosions they send you will trigger this.
+
+```jsx title="Parameters"
+-- Player handle / The player handle of the sending player.
+-- int explosionType / The type of explosion TODO: Document these.
+-- float damage / The damage the explosion does usually between 0.f and 5.float
+-- bool audible / Whether the explosion can be heard or not.
+-- bool invisible / Whether the explosion can be seen or not.
+-- Vector3 position / The location of the explosion, seems to be an offset when the player's in a car?
+-- int netId / The network ID of the explosion owner, this can be spoofed (ex: blame player)
+
+
+
+```

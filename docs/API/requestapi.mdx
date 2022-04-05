@@ -1,0 +1,49 @@
+---
+sidebar_position: 10
+---
+
+# Request API
+
+
+### Faith.Request
+
+```jsx title="Request Hook Example"
+-- Returns a Table
+local response = Faith.Request
+(
+    {
+        Url = "https://google.com",  
+        Method = "GET",
+        Headers = {
+            ["Content-Type"] = "application/json"
+        },
+        Body = "" -- this is a optional Header, not required to be put in here.
+    }
+)
+```
+
+### Request Table Fields
+
+| **Name** | **Required** | **Description**                                                                                                                                         |
+|:--------:|--------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Url      | Yes          | The target URL for this request, can be both http and https                                                                                             |
+| Method   | Yes          | The HTTP Method being used by this request. Usually GET or POST                                                                                         |
+| Headers  | Yes          | A Table of headers to be used with this request.                                                                                                        |
+| Body     | No           | The request body can be any string, including binary data. it might be necessary to specify the Content-Type header when sending JSON or other formats. |
+
+### Response Table Fields
+
+|  **Name**  | **Type** | **Description**                                                                                    |
+|:----------:|----------|----------------------------------------------------------------------------------------------------|
+| StatusCode | Integer  | The HTTP response code identifying the status of the response.                                     |
+| Results    | Yes      | The request body received in the response.                                                         |
+| Error      | Yes      | If there is any issue trying to get the information like wrong URL ect it will show the error here |
+
+### Antigrind Default Headers
+
+By Default we provide 2 headers to make it a ease for making certain stuff.
+
+|       **Name**      | **Description**                                                                   |
+|:-------------------:|-----------------------------------------------------------------------------------|
+| AG-Fingerprints     | Users HWID, this changes between PCs                                              |
+| AG-Userfingerprints | Similar to AG-Fingerprints, but doesn't change between PCS, it's unique per user. |

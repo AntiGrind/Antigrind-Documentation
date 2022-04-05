@@ -1,0 +1,21 @@
+---
+sidebar_position: 6
+---
+
+ NETWORK_PTFX_EVENT
+
+This event is called when a player spawns a PTFX (particle effect).
+
+```jsx title="Parameters"
+-- Player handle / The player handle of the sending player.
+-- Hash assetHash / The asset hash.
+-- Hash effectHash / The effect hash.
+-- float scale / How big it is.
+-- Vector3 position / Where it got spawned.
+-- Vector3 offset / By how much it got offsetted.
+-- Vector3 rotation / Rotation in degrees.
+-- bool isOnEntity / Whether it was spawned on an entity.
+-- uint16 entityNetId / Network id of said entity.
+
+```
+

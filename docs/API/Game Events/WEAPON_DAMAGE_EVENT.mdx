@@ -1,0 +1,25 @@
+---
+sidebar_position: 14
+---
+
+# WEAPON_DAMAGE_EVENT
+
+This event is called when a player damages something (usually you). Stuff like punches, shots would trigger this.
+```jsx title="Parameters"
+-- Player handle / The player handle of the sending player.
+-- uint8 damageType / The type of damage received TODO: Document this
+-- uint32 weaponHash / The weapon's hash.
+-- bool defaultDamageOverride / This gets turned on when some sort modification is done by damage, don't worry about this as we handle it ourselves.
+-- uint16 damage / The damage done by the weapon, damage overrides are automatically handled.
+-- bool didItHit / If the shot hit any entity, this will be on.
+-- bool silenced / Whether the shot was silenced.
+-- uint32 time / How long it took to take effect.
+-- bool kill / Whether if this shot should kill you.
+-- bool vehicle / Whether this was fired by a vehicle.
+-- Entity source / Which entity it came from.
+-- Entity target / Which entity it went to.
+-- uint8 tyreId / Which tyre got shot.
+-- uint8 suspensionId / Which suspension got shot.
+
+```
+

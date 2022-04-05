@@ -1,0 +1,19 @@
+---
+sidebar_position: 2
+---
+
+# FIRE_EVENT
+
+This event is called when another player makes a fire.
+
+```jsx title="Parameters"
+-- Player handle / The player handle of the sending player.
+-- table<FireInfo> fires / A table containing structs containing information about the fires created
+
+```
+
+```jsx title="FireInfo Struct"
+-- uint16 id / Identifier of this fire.
+-- uint8 maxChildren / Max amount of children this fire can make. (Spreading)
+
+```
