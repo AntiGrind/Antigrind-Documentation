@@ -162,6 +162,17 @@ You can use it if you want to code multiplatform for the Faith API as it's a gen
 print(Faith.GetGame()) --"Grand Theft Auto V"
 ```
 
+### Faith.PushNotification
+Pushes a notification at the bottom right, useful if you want to notify something huh.
+
+```jsx title=" Faith.PushNotification Example"
+
+<void> Faith.PushNotification(string title, string body) --If you don't provide an icon or additional info it'll default to a white ICON_INFO2.
+<void> Faith.PushNotification(string title, string body, string icon, int r, int g, int b) --Using this overload you may specify an icon and it's color.
+```
+
+
+
 ### Faith.GetTime
 Returns the current times.
 
